@@ -11,5 +11,3 @@ A boilerplate repo.
 6. Add all project partners and your assigned instructor as collaborators on the repository
 
 The project spec & rubric can be found [here](https://frontend.turing.io/projects/module-1/romcom-pair.html)
-
-neil && matt
