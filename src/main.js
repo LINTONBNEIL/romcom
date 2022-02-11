@@ -15,6 +15,7 @@ var userDesc2 = document.querySelector(".user-desc2")
 var homeView = document.querySelector(".home-view")
 var formView = document.querySelector(".form-view")
 var saveView = document.querySelector(".saved-view")
+var savedCoversSection = document.querySelector(".saved-covers-section");
 var makeNewBookButton = document.querySelector(".create-new-book-button")
 
 
@@ -29,8 +30,7 @@ window.onload = randomCover()
 randomCoverButton.addEventListener('click', randomCover)
 makeButton.addEventListener('click', viewForm)
 homeButton.addEventListener('click', goHome)
-viewSaveButton.addEventListener('click', viewSavedPage)
-
+viewSaveButton.addEventListener('click', viewSavedArrayData)
 
 
 function getRandomIndex(array) {
@@ -55,6 +55,8 @@ showNewCover();
 pushToArray();
 goHome();
 });
+
+
 
 
 function randomCover() {
@@ -82,6 +84,8 @@ formView.classList.remove("hidden")
 homeButton.classList.remove("hidden")
 randomCoverButton.classList.add("hidden")
 saveButton.classList.add("hidden")
+viewSavedPage.classList.add("hidden")
+saveView.classList.add("hidden")
 }
 
 function goHome() {
@@ -90,6 +94,7 @@ function goHome() {
   homeButton.classList.add("hidden")
   randomCoverButton.classList.remove("hidden")
   saveButton.classList.remove("hidden")
+  viewSaveButton.classList.remove("hidden")
   }
 
 function viewSavedPage() {
@@ -99,4 +104,31 @@ function viewSavedPage() {
   randomCoverButton.classList.add("hidden")
   homeButton.classList.remove("hidden")
   saveButton.classList.add("hidden")
+  viewSaveButton.classList.add("hidden")
+}
+
+saveButton.addEventListener('click', saveTheCover)
+
+function saveTheCover() {
+  savedCovers.push(currentCover);
+}
+
+function viewSavedArray() {
+  console.log('it works')
+  var displaySavedCovers = "";
+  for (var i = 0; i < savedCovers.length; i++) {
+    console.log(savedCovers[i].cover);
+    displaySavedCovers +=
+    `<section class='mini-cover'>
+    <img class="cover-image" src="${savedCovers[i].cover}">
+     <h2 class="cover-title">${savedCovers[i].title}</h2>
+     <h3 class="tagline">A tale of <span class="tagline-1">${savedCovers[i].tagline1}</span> and <span class="tagline-2">${savedCovers[i].tagline2}</span></h3>
+     </section>`;
+    }
+    savedCoversSection.innerHTML = displaySavedCovers;
+}
+
+function viewSavedArrayData() {
+  viewSavedPage();
+  viewSavedArray();
 }
