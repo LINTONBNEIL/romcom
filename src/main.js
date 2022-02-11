@@ -79,13 +79,15 @@ function showNewCover() {
 
 
 function viewForm() {
+  console.log('heres text')
 homeView.classList.add("hidden")
 formView.classList.remove("hidden")
 homeButton.classList.remove("hidden")
 randomCoverButton.classList.add("hidden")
 saveButton.classList.add("hidden")
-viewSavedPage.classList.add("hidden")
+// viewSavedPage.classList.add("hidden")
 saveView.classList.add("hidden")
+savedCoversSection.classList.add("hidden")
 }
 
 function goHome() {
@@ -95,6 +97,7 @@ function goHome() {
   randomCoverButton.classList.remove("hidden")
   saveButton.classList.remove("hidden")
   viewSaveButton.classList.remove("hidden")
+  saveView.classList.add("hidden")
   }
 
 function viewSavedPage() {
@@ -107,10 +110,10 @@ function viewSavedPage() {
   viewSaveButton.classList.add("hidden")
 }
 
-saveButton.addEventListener('click', saveTheCover)
+saveButton.addEventListener('click', noDuplicates)
 
-function saveTheCover() {
-  savedCovers.push(currentCover);
+function hideSaveView() {
+  saveView.classList.add("hidden")
 }
 
 function viewSavedArray() {
@@ -126,6 +129,12 @@ function viewSavedArray() {
      </section>`;
     }
     savedCoversSection.innerHTML = displaySavedCovers;
+}
+
+function noDuplicates() {
+  if (!savedCovers.includes(currentCover)) {
+    savedCovers.push(currentCover)
+  }
 }
 
 function viewSavedArrayData() {
