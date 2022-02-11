@@ -15,44 +15,66 @@ var userDesc2 = document.querySelector(".user-desc2")
 var homeView = document.querySelector(".home-view")
 var formView = document.querySelector(".form-view")
 var saveView = document.querySelector(".saved-view")
+var makeNewBookButton = document.querySelector(".create-new-book-button")
 
-// We've provided a few variables below
+
 
 var savedCovers = [
   new Cover("http://3.bp.blogspot.com/-iE4p9grvfpQ/VSfZT0vH2UI/AAAAAAAANq8/wwQZssi-V5g/s1600/Do%2BNot%2BForsake%2BMe%2B-%2BImage.jpg", "Sunsets and Sorrows", "sunsets", "sorrows")
 ];
 var currentCover;
 
-// Add your event listeners here 👇
+window.onload = randomCover()
+
 randomCoverButton.addEventListener('click', randomCover)
 makeButton.addEventListener('click', viewForm)
 homeButton.addEventListener('click', goHome)
 viewSaveButton.addEventListener('click', viewSavedPage)
-// Create your event handlers and other functions here 👇
 
 
-// We've provided one function to get you started
+
 function getRandomIndex(array) {
-  return array[Math.floor(Math.random() * array.length)];
+  return Math.floor(Math.random() * array.length);
 }
 
-// function newHotBook() {
-//   newCover = new Cover {
-//     covers[getRandomIndex(covers)],
-//     titles[getRandomIndex(titles)],
-//     descriptors[getRandomIndex(descriptors)],
-//     descriptors[getRandomIndex(descriptors)]
-//   }
-// }
-// newHotBook();
+function makeMyBook(newUserCover, newUserTitle, newUserDesc1, newUserDesc2) {
+currentCover = new Cover(newUserCover, newUserTitle, newUserDesc1, newUserDesc2)
+};
+
+function pushToArray() {
+  covers.push(currentCover.cover);
+  titles.push(currentCover.title);
+  descriptors.push(currentCover.tagline1);
+  descriptors.push(currentCover.tagline2);
+};
+
+makeNewBookButton.addEventListener('click', function() {
+  event.preventDefault();
+makeMyBook(userCover.value, userTitle.value, userDesc1.value, userDesc2.value);
+showNewCover();
+pushToArray();
+goHome();
+});
+
 
 function randomCover() {
-coverTitle.innerText = getRandomIndex(titles);
-tagLine1.innerText = getRandomIndex(descriptors);
-tagLine2.innerText = getRandomIndex(descriptors);
-coverImage.src = getRandomIndex(covers);
+  currentCover = new Cover(
+    covers[getRandomIndex(covers)],
+    titles[getRandomIndex(titles)],
+    descriptors[getRandomIndex(descriptors)],
+    descriptors[getRandomIndex(descriptors)]
+  );
+  showNewCover();
 }
 randomCover();
+
+function showNewCover() {
+  coverImage.src = currentCover.cover;
+  coverTitle.innerText = currentCover.title;
+  tagLine1.innerText = currentCover.tagline1;
+  tagLine2.innerText = currentCover.tagline2;
+}
+
 
 function viewForm() {
 homeView.classList.add("hidden")
