@@ -17,7 +17,7 @@ var formView = document.querySelector(".form-view")
 var saveView = document.querySelector(".saved-view")
 var savedCoversSection = document.querySelector(".saved-covers-section");
 var makeNewBookButton = document.querySelector(".create-new-book-button")
-
+var deleteSavedCover;
 
 
 var savedCovers = [
@@ -119,7 +119,7 @@ function hideSaveView() {
 function viewSavedArray() {
   console.log('it works')
   var displaySavedCovers = "";
-  for (var i = 0; i < savedCovers.length; i++) {
+  for (i = 0; i < savedCovers.length; i++) {
     console.log(savedCovers[i].cover);
     displaySavedCovers +=
     `<section class='mini-cover'>
@@ -140,4 +140,19 @@ function noDuplicates() {
 function viewSavedArrayData() {
   viewSavedPage();
   viewSavedArray();
+  deleteBook();
+}
+
+
+
+function deleteBook() {
+  var deletingSavedCovers = document.querySelectorAll('.mini-cover')
+  for (i = 0; i < deletingSavedCovers.length; i++) {
+    var y = i;
+    deletingSavedCovers[i].addEventListener('dblclick', function(){
+      savedCovers.splice(y, 1)
+      viewSavedArrayData();
+    })
+    }
+
 }
