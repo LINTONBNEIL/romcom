@@ -1,4 +1,3 @@
-// Create variables targetting the relevant DOM elements here 👇
 var coverTitle = document.querySelector(".cover-title")
 var coverImage = document.querySelector(".cover-image")
 var tagLine1 = document.querySelector(".tagline-1")
@@ -15,8 +14,9 @@ var userDesc2 = document.querySelector(".user-desc2")
 var homeView = document.querySelector(".home-view")
 var formView = document.querySelector(".form-view")
 var saveView = document.querySelector(".saved-view")
+var savedCoversSection = document.querySelector(".saved-covers-section");
 var makeNewBookButton = document.querySelector(".create-new-book-button")
-
+var deleteSavedCover;
 
 
 var savedCovers = [
@@ -24,14 +24,13 @@ var savedCovers = [
 ];
 var currentCover;
 
-window.onload = randomCover()
+randomCover();
 
 randomCoverButton.addEventListener('click', randomCover)
 makeButton.addEventListener('click', viewForm)
 homeButton.addEventListener('click', goHome)
-viewSaveButton.addEventListener('click', viewSavedPage)
-
-
+viewSaveButton.addEventListener('click', viewSavedArrayData)
+saveView.addEventListener('dblclick', deleteBook)
 
 function getRandomIndex(array) {
   return Math.floor(Math.random() * array.length);
@@ -56,7 +55,6 @@ pushToArray();
 goHome();
 });
 
-
 function randomCover() {
   currentCover = new Cover(
     covers[getRandomIndex(covers)],
@@ -66,7 +64,6 @@ function randomCover() {
   );
   showNewCover();
 }
-randomCover();
 
 function showNewCover() {
   coverImage.src = currentCover.cover;
@@ -75,13 +72,14 @@ function showNewCover() {
   tagLine2.innerText = currentCover.tagline2;
 }
 
-
 function viewForm() {
 homeView.classList.add("hidden")
 formView.classList.remove("hidden")
 homeButton.classList.remove("hidden")
 randomCoverButton.classList.add("hidden")
 saveButton.classList.add("hidden")
+saveView.classList.add("hidden")
+savedCoversSection.classList.add("hidden")
 }
 
 function goHome() {
@@ -90,6 +88,8 @@ function goHome() {
   homeButton.classList.add("hidden")
   randomCoverButton.classList.remove("hidden")
   saveButton.classList.remove("hidden")
+  viewSaveButton.classList.remove("hidden")
+  saveView.classList.add("hidden")
   }
 
 function viewSavedPage() {
@@ -99,4 +99,44 @@ function viewSavedPage() {
   randomCoverButton.classList.add("hidden")
   homeButton.classList.remove("hidden")
   saveButton.classList.add("hidden")
+  viewSaveButton.classList.add("hidden")
+}
+
+saveButton.addEventListener('click', noDuplicates)
+
+function hideSaveView() {
+  saveView.classList.add("hidden")
+}
+
+function viewSavedArray() {
+  var displaySavedCovers = "";
+  for (let i = 0; i < savedCovers.length; i++) {
+    displaySavedCovers +=
+    `<section class='mini-cover'>
+    <img class="cover-image" id="${savedCovers[i].id}" src="${savedCovers[i].cover}">
+     <h2 class="cover-title">${savedCovers[i].title}</h2>
+     <h3 class="tagline">A tale of <span class="tagline-1">${savedCovers[i].tagline1}</span> and <span class="tagline-2">${savedCovers[i].tagline2}</span></h3>
+     </section>`;
+    }
+    savedCoversSection.innerHTML = displaySavedCovers;
+}
+
+function noDuplicates() {
+  if (!savedCovers.includes(currentCover)) {
+    savedCovers.push(currentCover)
+  }
+}
+
+function viewSavedArrayData() {
+  viewSavedPage();
+  viewSavedArray();
+}
+
+function deleteBook(event) {
+  var coverID = parseInt(event.target.id)
+  for (let i = 0; i < savedCovers.length; i++) {
+    if (savedCovers[i].id === coverID)
+      {savedCovers.splice(i, 1)}
+      viewSavedArrayData();
+  }
 }
