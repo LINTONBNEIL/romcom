@@ -25,7 +25,7 @@ var savedCovers = [
 ];
 var currentCover;
 
-randomCover()
+randomCover();
 
 randomCoverButton.addEventListener('click', randomCover)
 makeButton.addEventListener('click', viewForm)
@@ -69,7 +69,7 @@ function randomCover() {
   );
   showNewCover();
 }
-randomCover();
+// randomCover();
 
 function showNewCover() {
   coverImage.src = currentCover.cover;
@@ -119,7 +119,7 @@ function hideSaveView() {
 
 function viewSavedArray() {
   var displaySavedCovers = "";
-  for (i = 0; i < savedCovers.length; i++) {
+  for (let i = 0; i < savedCovers.length; i++) {
     displaySavedCovers +=
     `<section class='mini-cover'>
     <img class="cover-image" id="${savedCovers[i].id}" src="${savedCovers[i].cover}">
@@ -144,12 +144,11 @@ function viewSavedArrayData() {
 
 
 function deleteBook(event) {
-  var coverID = +event.target.id
-  for (i = 0; i < savedCovers.length; i++) {
+  var coverID = parseInt(event.target.id)
+  for (let i = 0; i < savedCovers.length; i++) {
     console.log(savedCovers[i].id, coverID)
     if (savedCovers[i].id === coverID)
       {savedCovers.splice(i, 1)}
       viewSavedArrayData();
-
-    }
+  }
 }
