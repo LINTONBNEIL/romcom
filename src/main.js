@@ -25,12 +25,13 @@ var savedCovers = [
 ];
 var currentCover;
 
-window.onload = randomCover()
+randomCover()
 
 randomCoverButton.addEventListener('click', randomCover)
 makeButton.addEventListener('click', viewForm)
 homeButton.addEventListener('click', goHome)
 viewSaveButton.addEventListener('click', viewSavedArrayData)
+saveView.addEventListener('dblclick', deleteBook)
 
 
 function getRandomIndex(array) {
@@ -117,13 +118,11 @@ function hideSaveView() {
 }
 
 function viewSavedArray() {
-  console.log('it works')
   var displaySavedCovers = "";
   for (i = 0; i < savedCovers.length; i++) {
-    console.log(savedCovers[i].cover);
     displaySavedCovers +=
     `<section class='mini-cover'>
-    <img class="cover-image" src="${savedCovers[i].cover}">
+    <img class="cover-image" id="${savedCovers[i].id}" src="${savedCovers[i].cover}">
      <h2 class="cover-title">${savedCovers[i].title}</h2>
      <h3 class="tagline">A tale of <span class="tagline-1">${savedCovers[i].tagline1}</span> and <span class="tagline-2">${savedCovers[i].tagline2}</span></h3>
      </section>`;
@@ -140,19 +139,17 @@ function noDuplicates() {
 function viewSavedArrayData() {
   viewSavedPage();
   viewSavedArray();
-  deleteBook();
 }
 
 
 
-function deleteBook() {
-  var deletingSavedCovers = document.querySelectorAll('.mini-cover')
-  for (i = 0; i < deletingSavedCovers.length; i++) {
-    var y = i;
-    deletingSavedCovers[i].addEventListener('dblclick', function(){
-      savedCovers.splice(y, 1)
+function deleteBook(event) {
+  var coverID = +event.target.id
+  for (i = 0; i < savedCovers.length; i++) {
+    console.log(savedCovers[i].id, coverID)
+    if (savedCovers[i].id === coverID)
+      {savedCovers.splice(i, 1)}
       viewSavedArrayData();
-    })
-    }
 
+    }
 }
